@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+typedef struct {
+    int numero;
+    float saldo;
+} Projeto;
+
+void atualizarSaldo(Projeto *projeto, float valor, char tipoDespesa) {
+    if (tipoDespesa == 'R') {
+        projeto->saldo += valor;
+    } else if (tipoDespesa == 'D') {
+        projeto->saldo -= valor;
+    }
+}
+
+int main() {
+    int numProjetos, i;
+    printf("Digite o número de projetos: ");
+    scanf("%d", &numProjetos);
+    Projeto projetos[numProjetos];
+    
+    for (i = 0; i < numProjetos; i++) {
+        printf("Digite o número do projeto %d: ", i + 1);
+        scanf("%d", &projetos[i].numero);
+        projetos[i].saldo = 0;
+    }
+    
+    int numEntradas;
+    printf("Digite o número de entradas: ");
+    scanf("%d", &numEntradas);
+    
+    for (i = 0; i < numEntradas; i++) {
+        int numProjeto;
+        float valor;
+        char tipoDespesa;
+        printf("Digite o número do projeto, valor e tipo de despesa (R/D) da entrada %d: ", i + 1);
+        scanf("%d %f %c", &numProjeto, &valor, &tipoDespesa);
+        int j;
+        for (j = 0; j < numProjetos; j++) {
+            if (projetos[j].numero == numProjeto) {
+                atualizarSaldo(&projetos[j], valor, tipoDespesa);
+                break;
+            }
+        }
+    }
+    
+    for (i = 0; i < numProjetos; i++) {
+        printf("O saldo final do projeto %d é: R$ %.2f\n", projetos[i].numero, projetos[i].saldo);
+    }
+    
+    return 0;
+}
